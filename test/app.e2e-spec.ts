@@ -39,6 +39,26 @@ describe('App e2e', () => {
     };
 
     describe('Signup', () => {
+      it('should throw an exception if email empty', () => {
+        return pactum
+          .spec()
+          .post('/auth/signin')
+          .withBody({ password: dto.password })
+          .expectStatus(400);
+      });
+
+      it('should throw an exception if password empty', () => {
+        return pactum
+          .spec()
+          .post('/auth/signin')
+          .withBody({ email: dto.email })
+          .expectStatus(400);
+      });
+
+      it('should throw if no body provided', () => {
+        return pactum.spec().post('/auth/signup').expectStatus(400);
+      });
+
       it('should signup', () => {
         return pactum
           .spec()
@@ -63,6 +83,10 @@ describe('App e2e', () => {
           .post('/auth/signin')
           .withBody({ email: dto.email })
           .expectStatus(400);
+      });
+
+      it('should throw if no body provided', () => {
+        return pactum.spec().post('/auth/signup').expectStatus(400);
       });
 
       it('should signin', () => {
