@@ -53,9 +53,18 @@ describe('App e2e', () => {
         return pactum
           .spec()
           .post('/auth/signin')
-          .withBody({ password: '123' })
+          .withBody({ password: dto.password })
           .expectStatus(400);
       });
+
+      it('should throw an exception if password empty', () => {
+        return pactum
+          .spec()
+          .post('/auth/signin')
+          .withBody({ email: dto.email })
+          .expectStatus(400);
+      });
+
       it('should signin', () => {
         return pactum
           .spec()
